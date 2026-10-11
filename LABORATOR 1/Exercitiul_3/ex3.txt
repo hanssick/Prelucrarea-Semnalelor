@@ -1,0 +1,22 @@
+Exercitiul 3
+
+Date:
+- frecventa de esantionare: fs = 2000 Hz;
+- fiecare esantion ocupa 4 biti;
+- durata inregistrarii: 1 ora = 3600 secunde.
+
+(a) Intervalul dintre doua esantioane consecutive:
+T = 1 / fs = 1 / 2000 = 0.0005 s = 0.5 ms.
+
+(b) Memoria ocupata de o ora de achizitie:
+N = fs * durata = 2000 * 3600 = 7 200 000 esantioane.
+Numarul total de biti = N * 4 = 28 800 000 biti.
+Deoarece 1 byte = 8 biti:
+Memoria = 28 800 000 / 8 = 3 600 000 bytes.
+
+Raspuns:
+(a) 0.0005 secunde, adica 0.5 ms.
+(b) 3 600 000 bytes, adica 3.6 MB (in sistem zecimal).
+
+Calculul presupune memorarea compacta a esantioanelor pe 4 biti,
+fara spatiu suplimentar pentru antete sau alte metadate.
