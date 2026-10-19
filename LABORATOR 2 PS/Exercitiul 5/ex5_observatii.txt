@@ -1,0 +1,17 @@
+Laboratorul 2 - Exercitiul 5
+
+Am generat doua semnale sinusoidale, fiecare cu amplitudinea 0.5 si
+durata de 2 secunde, esantionate la 44100 Hz.
+Primul are frecventa de 440 Hz, iar al doilea are frecventa de 880 Hz.
+
+Le-am pus unul dupa celalalt in acelasi vector folosind:
+x = np.concatenate((x1, x2))
+
+Observatia asteptata la ascultare:
+In primele 2 secunde se aude tonul de 440 Hz, iar in urmatoarele
+2 secunde se aude tonul de 880 Hz. Al doilea ton este mai inalt,
+cu o octava, deoarece frecventa lui este dubla.
+
+Durata totala este de 4 secunde. Amplitudinea este aceeasi pentru
+cele doua semnale; schimbarea inaltimii tonului provine din
+schimbarea frecventei.

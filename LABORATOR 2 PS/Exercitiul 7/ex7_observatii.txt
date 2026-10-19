@@ -1,0 +1,30 @@
+Laboratorul 2 - Exercitiul 7
+
+Alegem un sinus de frecventa f = 50 Hz, amplitudine 1 si faza zero.
+Frecventa initiala de esantionare este fs = 1000 Hz.
+Pe intervalul [0, 0.1) secunde avem 100 de esantioane.
+
+(a) Decimare pornind de la primul element: x_a = x[::4]
+Pastram indicii 0, 4, 8, 12, ..., 96. Obtinem 25 de esantioane.
+Distanta dintre momentele pastrate este 4/1000 = 0.004 secunde.
+Noua frecventa de esantionare este 1000/4 = 250 Hz.
+Graficul contine mai putine puncte pe acelasi interval de timp.
+Frecventa sinusului ramane 50 Hz in acest exemplu: este sub
+jumatatea noii frecvente de esantionare, 250/2 = 125 Hz.
+Nu apare aliere pentru frecventa aleasa.
+
+(b) Decimare pornind de la al doilea element: x_b = x[1::4]
+Pastram indicii 1, 5, 9, 13, ..., 97. Obtinem tot 25 de esantioane,
+cu aceeasi frecventa de esantionare, 250 Hz.
+Primul moment pastrat este acum t = 0.001 secunde.
+Grila de esantionare este deplasata cu 0.001 secunde fata de (a),
+de aceea valorile pastrate sunt diferite.
+Maximele valorilor pastrate pot fi diferite intre cele doua variante,
+fiindca selectam alte momente ale aceluiasi sinus de amplitudine 1.
+Graficele folosesc momentele originale: t[::4] si t[1::4].
+
+Daca numerotam fiecare vector nou de la m = 0, avem:
+x_a[m] = sin(2*pi*50*m/250),
+x_b[m] = sin(2*pi*50*m/250 + pi/10).
+Diferenta de faza dintre aceste doua siruri reindexate este pi/10.
+Pe axa timpului original, ambele seturi sunt puncte ale aceluiasi sinus.

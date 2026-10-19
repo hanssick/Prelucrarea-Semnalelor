@@ -1,0 +1,25 @@
+Laboratorul 2 - Exercitiul 6
+
+Alegem fs = 1000 Hz, amplitudinea A = 1 si faza phi = 0.
+Momentele de esantionare sunt t = n/fs, unde n este intreg.
+Formula este x[n] = sin(2*pi*f*n/fs).
+
+(a) f = fs/2 = 500 Hz
+x[n] = sin(pi*n) = 0 pentru orice n intreg.
+Toate esantioanele sunt nule. Sinusul continuu de 500 Hz nu este
+identic nul, dar, cu faza aleasa, il esantionam numai in zerourile lui.
+
+(b) f = fs/4 = 250 Hz
+x[n] = sin(pi*n/2).
+Valorile se repeta in ordinea: 0, 1, 0, -1, 0, 1, 0, -1, ...
+Perioada fundamentala a sirului este de 4 esantioane.
+
+(c) f = 0 Hz
+x[n] = sin(0) = 0 pentru orice n.
+Semnalul este identic nul, deoarece atat frecventa, cat si faza sunt zero.
+
+Observatie numerica:
+La (a), si la valorile teoretic nule din (b), Python poate calcula
+numere foarte mici, de ordinul 10^(-15), din cauza preciziei finite.
+Aceste valori reprezinta erori numerice de calcul, nu oscilatii reale.
+Toate cele trei grafice folosesc aceleasi limite verticale, [-1.2, 1.2].

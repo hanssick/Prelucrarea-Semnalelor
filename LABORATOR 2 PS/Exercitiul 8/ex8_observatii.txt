@@ -1,0 +1,35 @@
+Laboratorul 2 - Exercitiul 8
+
+Interval: alpha in [-pi/2, pi/2], cu alpha masurat in radiani.
+
+Aproximari:
+Taylor de ordinul 1: T(alpha) = alpha.
+Pade: P(alpha) = (alpha - 7*alpha^3/60)/(1 + alpha^2/20).
+
+Erorile absolute sunt:
+E_T(alpha) = |sin(alpha) - T(alpha)|,
+E_P(alpha) = |sin(alpha) - P(alpha)|.
+
+Observatii:
+1. Aproximarea sin(alpha) aproximativ egal cu alpha este buna pentru
+   valori ale lui alpha apropiate de zero. Eroarea creste spre capetele
+   intervalului.
+2. Ambele aproximari sunt exacte la alpha = 0.
+3. Pe grila analizata, aproximarea Pade este mai precisa decat
+   aproximarea Taylor liniara, exceptand egalitatile datorate preciziei
+   numerice foarte aproape de zero.
+4. La alpha = pi/2:
+   - eroarea Taylor este aproximativ 0.570796327;
+   - eroarea Pade este aproximativ 0.004227099.
+5. Graficul cu axa verticala logaritmica pune in evidenta diferenta
+   dintre ordinele de marime ale celor doua erori.
+6. Logaritmul lui zero nu este definit. Valorile nule sunt omise doar
+   din graficul logaritmic, fara a modifica erorile calculate.
+7. Foarte aproape de zero, scaderea a doua valori numerice aproape
+   egale poate produce erori calculate nule sau fluctuatii mici,
+   datorita preciziei finite a numerelor in virgula mobila.
+
+Fisiere grafice:
+- ex8_functii.pdf: sinusul si cele doua aproximari;
+- ex8_erori.pdf: erorile absolute pe scara liniara;
+- ex8_erori_log.pdf: erorile absolute pe scara logaritmica.
