@@ -1,0 +1,65 @@
+Laboratorul 3 - Exercitiul 2
+
+DATELE ALESE
+Semnal: x(t) = sin(2*pi*3*t), amplitudine 1, faza initiala 0.
+Frecventa: f = 3 Hz; frecventa de esantionare: fs = 1000 Hz.
+Interval: [0, 1] secunde, cu ambele capete incluse: 1001 esantioane.
+Frecventele de infasurare din Figura 2: 1, 2, 3 si 5 Hz.
+Pentru Figura 1, frecventa de infasurare este 1 Hz.
+
+POVESTEA CODULUI
+Pornim de la un sinus simplu. In graficul temporal vedem trei perioade
+intr-o secunda. Pentru a-l reprezenta in planul complex, construim un
+factor exp(-2*pi*j*omega*t), care are modulul 1 si se roteste in sens
+orar. Aici omega este frecventa de infasurare exprimata in Hz, conform
+notatiei din indrumar; in exponent apare si factorul 2*pi.
+
+Inmultim sinusul cu acest factor complex. Modulul produsului este |x(t)|,
+deoarece factorul exponential are modulul 1. Cand x(t) este negativ,
+punctul se afla in directia opusa fata de factorul de rotatie. Cand x(t)
+este zero, punctul ajunge in origine. De aceea infasurarea se poate
+intoarce, poate repeta trasee si poate trece de mai multe ori prin acelasi
+punct. Cercul punctat gri este doar un reper de raza 1.
+
+In Figura 1, punem alaturi semnalul in timp si infasurarea lui. Punctele
+rosii corespund aceluiasi esantion, iar segmentele rosii evidentiaza
+amplitudinea si raza. In PDF este evidentiat indicele n = 620, adica
+t = 0.620 secunde. Culorile din ambele grafice codifica aceeasi marime:
+distanta punctului complex fata de origine, |x(t)|.
+
+In Figura 2, pastram semnalul si schimbam numai viteza infasurarii.
+Comparam 1, 2, 3 si 5 Hz. Pentru 3 Hz, frecventa de infasurare este
+egala cu frecventa semnalului. In acest caz, traseul este un cerc cu
+centrul (0, -1/2) si raza 1/2, parcurs de mai multe ori. Pentru celelalte
+valori obtinem alte forme. Scara axelor si scara culorilor sunt comune,
+astfel incat comparatia este corecta.
+
+Dupa salvarea figurilor complete in PDF, animatiile arata numai punctele
+de la inceput pana la momentul curent. La fiecare cadru se adauga pana
+la 10 esantioane, iar indicatorul rosu se muta la ultimul punct desenat.
+Intervalul tinta este de 40 ms intre cadre, deci o secunda de semnal se
+deseneaza in aproximativ patru secunde. Viteza exacta din fereastra depinde
+si de calculator. Fisierele GIF au 25 de cadre pe secunda.
+
+Aceste curbe reprezinta termenii x(t)*exp(-2*pi*j*omega*t), inainte de
+insumare. Coeficientul Fourier se obtine prin insumarea termenilor, pas
+care va fi folosit la exercitiul 3. Nu am folosit numpy.fft sau scipy.fft.
+
+RULARE
+Ruleaza ex2.py intr-un mediu Python cu NumPy si Matplotlib.
+Pillow este necesar pentru salvarea GIF-urilor si este o dependenta
+obisnuita a Matplotlib.
+In Spyder, pentru animatii in ferestre, scrie in consola IPython:
+%matplotlib qt
+Apoi ruleaza fisierul. Comanda cu % se scrie in consola, nu in fisierul .py.
+Implicit, salveaza_gif = False: programul creeaza PDF-urile si porneste
+animatiile interactive. GIF-urile sunt deja incluse in pachetul primit.
+Pentru a genera din nou si GIF-urile, seteaza salveaza_gif = True in cod;
+exportul lor poate dura mai mult, in functie de calculator.
+
+FISIERE GENERATE
+ex2_figura1.pdf - semnalul in timp si infasurarea la 1 Hz.
+ex2_figura2.pdf - comparatia celor patru frecvente de infasurare.
+ex2_animatie1.gif - desenarea progresiva a Figurii 1.
+ex2_animatie2.gif - desenarea progresiva a Figurii 2.
+Fisierele sunt salvate in directorul de lucru din care rulezi programul.

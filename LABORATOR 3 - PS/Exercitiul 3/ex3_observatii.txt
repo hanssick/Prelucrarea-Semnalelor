@@ -1,0 +1,68 @@
+Laboratorul 3 - Exercitiul 3
+
+SEMNALUL ALES
+x(t) = cos(2*pi*7*t) + 2*cos(2*pi*23*t) + 0.5*cos(2*pi*61*t).
+Componentele au frecventele 7, 23 si 61 Hz si amplitudinile 1, 2 si 0.5.
+Folosim fs = 1000 Hz si N = 1000 de esantioane.
+Momentele sunt t_n = n/fs, pentru n = 0, ..., 999.
+Intervalul de observatie are durata N/fs = 1 secunda; esantionul de la
+t = 1 secunda nu este inclus, pentru a nu repeta capatul perioadei.
+Toate cele trei frecvente sunt sub limita Nyquist, fs/2 = 500 Hz.
+
+CE CALCULAM
+X[k] = suma, pentru n de la 0 la N-1, a termenilor
+       x[n] * exp(-2*pi*j*k*n/N).
+Indicele k corespunde frecventei fizice f_k = k*fs/N.
+Rezolutia in frecventa este fs/N = 1 Hz.
+Astfel, cele trei componente cad exact pe indicii k = 7, 23 si 61.
+
+POVESTEA CODULUI
+Construim mai intai trei oscilatii cosinusoidale. Fiecare are propria
+frecventa si amplitudine. Le adunam esantion cu esantion. In graficul
+temporal obtinem o forma mai complicata, deoarece toate componentele
+actioneaza simultan.
+
+Pentru a afla ce frecvente contine semnalul, incercam pe rand fiecare
+frecventa a transformatei. Pentru un indice k fixat, inmultim fiecare
+esantion cu un factor complex de rotatie si adunam toate produsele.
+Bucla exterioara alege frecventa, iar bucla interioara calculeaza suma.
+Acesta este pasul de insumare care urmeaza infasurarii vizualizate la
+exercitiul 2.
+
+Repetam calculul intr-o forma legata de algebra liniara. Construim
+matricea Fourier, ale carei linii contin factorii de rotatie pentru
+frecventele analizate. Produsul F @ x calculeaza dintr-o singura operatie
+matriceala toate acele sume. Verificam cu np.allclose ca rezultatele
+coincid in limita preciziei numerice.
+
+Coeficientii Fourier sunt numere complexe. Pentru grafic luam modulul
+lor, cu np.abs. In spectrul afisat de la 0 la 100 Hz apar trei varfuri,
+la 7, 23 si 61 Hz. Componenta de 23 Hz produce varful cel mai inalt,
+deoarece are amplitudinea cea mai mare.
+
+INTERPRETAREA INALTIMII VARFURILOR
+Folosim DFT fara normalizare, exact in conventia formulei din indrumar.
+Pentru un cosinus de amplitudine A, aflat pe un indice DFT interior
+intervalului 0 < f < fs/2, fiecare dintre cele doua componente Fourier
+conjugate are modulul N*A/2.
+Prin urmare, pentru cele trei frecvente pozitive obtinem:
+7 Hz  -> 500;
+23 Hz -> 1000;
+61 Hz -> 250.
+Raportul inaltimilor este 1 : 2 : 0.5, la fel ca raportul amplitudinilor.
+Graficul afiseaza |X[k]|, nu amplitudinea normalizata si nici energia.
+
+Deoarece semnalul este real, exista si varfuri conjugate la indicii
+N-7, N-23 si N-61. Acestia corespund frecventelor negative -7, -23 si
+-61 Hz si nu apar in graficul restrans la 0-100 Hz.
+
+Pentru alegerile facute, toate frecventele cad exact pe grila DFT.
+Celelalte valori sunt zero matematic si foarte aproape de zero numeric.
+Pentru alte durate sau frecvente care nu cad pe grila, contributia unei
+componente se poate raspandi pe mai multi coeficienti: scurgere spectrala.
+
+RULARE SI FISIERE
+Ruleaza ex3.py intr-un mediu cu NumPy si Matplotlib.
+Programul afiseaza verificarile, figura si salveaza ex3.pdf in directorul
+de lucru din care este rulat.
+Nu am folosit numpy.fft sau scipy.fft.
