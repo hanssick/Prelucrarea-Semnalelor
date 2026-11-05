@@ -1,0 +1,103 @@
+LABORATORUL 4 - EXERCITIUL 6
+Spectrograma vocalelor dintr-un fisier audio
+
+CERINTA
+(a) Citim un fisier audio, obtinand un vector cu N esantioane.
+(b) Extragem grupuri de 1% din N, cu o suprapunere de 50%.
+(c) Calculam FFT pentru fiecare grup.
+(d) Punem valoarea absoluta a fiecarei FFT pe cate o coloana a unei matrice.
+(e) Afisam matricea ca spectrograma si salvam graficul in PDF.
+
+POVESTEA CODULUI
+Programul incepe prin a cauta vocale.wav in acelasi dosar cu ex6.py.
+Functia wavfile.read ne da doua lucruri: frecventa de esantionare fs si
+vectorul cu valorile inregistrate. Pentru un fisier stereo facem media
+canalelor, astfel incat sa lucram tot cu un singur vector.
+
+Numaram esantioanele: acest numar este N. Luam aproximativ 1% din N pentru
+fiecare fereastra. Deoarece ferestrele trebuie sa contina un numar intreg de
+esantioane, rotunjim aceasta lungime la cel mai apropiat numar par.
+Astfel putem avansa exact cu jumatate din lungimea ferestrei. Doua ferestre
+vecine au in comun cealalta jumatate: aceasta este suprapunerea de 50%.
+
+Din prima fereastra calculam FFT. Rezultatul contine numere complexe;
+valoarea lor absoluta ne spune cat de puternica este fiecare componenta
+spectrala in acea fereastra. Punem toate modulele obtinute pe prima coloana.
+Avansam cu pasul stabilit si repetam. Coloanele se adauga de la stanga la
+dreapta, in ordinea timpului. Matricea spectrograma pastreaza modulele
+FFT complete, asa cum cere enuntul.
+
+Pentru desen folosim frecventele de la 0 la fs/2, inclusiv. Semnalul audio
+este real, iar modulele din cealalta jumatate a spectrului sunt simetrice.
+Asociem fiecarei coloane timpul din centrul ferestrei analizate.
+
+Ca sa vedem si componentele mai slabe, transformam numai valorile destinate
+culorilor in decibeli relativi. Matricea initiala a modulelor ramane intacta.
+Folosim D[k,j] = 20*log10(max(M[k,j]/Mmax, 0.0001)).
+Mmax este maximul global din matricea modulelor. Pragul inferior de afisare
+este -80 dB si evita logaritmul lui zero. Nu este o masurare in dB SPL si
+nu este o densitate spectrala de putere. Daca WAV-ul contine numai liniste,
+figura ramane la nivelul de afisare -80 dB.
+
+Pe orizontala citim timpul, pe verticala frecventa, iar culoarea arata
+modulul FFT relativ. Culorile deschise indica valori mai mari. Figura se
+salveaza automat ca ex6.pdf, apoi este afisata in Spyder.
+
+FORMULE
+L = 2*round(0.01*N/2), lungimea para a ferestrei.
+H = L/2, pasul dintre inceputurile ferestrelor.
+x_j[n] = x[j*H+n], unde n = 0, ..., L-1.
+X_j[k] = suma pentru n=0,...,L-1 din x_j[n]*exp(-2*pi*i*k*n/L).
+M[k,j] = |X_j[k]|.
+f_k = k*fs/L.
+t_j = (j*H + (L-1)/2)/fs.
+In formule, i este unitatea imaginara, iar j este indicele ferestrei.
+
+REZULTATE PENTRU WAV-UL INCLUS
+Frecventa de esantionare: 16000 Hz.
+Numar total de esantioane: 82505.
+Durata: 5.1565625 s.
+Lungimea ferestrei: 826 esantioane, adica 1.00115% din N.
+Durata ferestrei: 51.625 ms.
+Pas: 413 esantioane; suprapunere: 413 esantioane, exact 50%.
+Numar de ferestre complete: 198.
+Dimensiunea matricei cu FFT complete: 826 randuri x 198 coloane.
+Dimensiunea matricei afisate: 414 randuri x 198 coloane.
+Distanta dintre frecventele FFT: 19.370460 Hz.
+Folosim numai ferestre complete. La sfarsit raman
+318 esantioane care nu formeaza o noua fereastra completa; nu le completam cu zerouri.
+
+OBSERVATII DESPRE FIGURA
+Se vad cinci grupuri de sunete in ordinea a, e, i, o, u.
+Pauzele introduse intre fisiere apar ca regiuni intunecate.
+Distribuirea benzilor mai intense pe axa frecventei se schimba de la o
+vocala la alta. Acest lucru permite compararea vizuala a vocalelor.
+Programul nu atribuie automat etichete vocalelor si nu estimeaza formantii.
+
+Exemplu de interpretare: in regiunea vocalei i se vede o zona intensa
+in jurul a 3300 Hz; in regiunea vocalei e apar zone intense la alte
+frecvente. Observatia se refera la acest montaj, nu la valori universale
+pentru toate vocile. Pentru a si o se vede, de asemenea, o repartizare
+diferita a componentelor intense la frecvente joase.
+
+IMPLEMENTARE
+Ferestrele sunt portiuni extrase direct din vector, fara ponderare Hann
+sau Hamming. FFT se calculeaza explicit in bucla cu numpy.fft.fft;
+nu folosim o functie care construieste automat spectrograma.
+WAV-ul inclus este mono, PCM pe 16 biti, si provine din cinci inregistrari
+fonetice reale de pe Wikimedia Commons. Atribuirea si modificarile sunt
+explicate complet in surse_audio.txt.
+
+CUM RULEZI IN SPYDER
+1. Descarci ex6.py si vocale.wav in acelasi dosar.
+2. Deschizi ex6.py in Spyder.
+3. Apesi butonul verde Run.
+4. Apare spectrograma; ex6.pdf este salvat in acelasi dosar.
+Biblioteci folosite: NumPy, SciPy si Matplotlib.
+Pentru GitHub pastrezi impreuna codul, WAV-ul, PDF-ul si surse_audio.txt;
+poti adauga si acest fisier de explicatii.
+
+DOCUMENTATIE PENTRU FUNCTII
+https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.wavfile.read.html
+https://numpy.org/doc/stable/reference/generated/numpy.fft.fft.html
+https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolormesh.html

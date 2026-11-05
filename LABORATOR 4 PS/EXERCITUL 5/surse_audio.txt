@@ -1,0 +1,57 @@
+SURSE AUDIO - LABORATORUL 4, EXERCITIILE 5 SI 6
+
+Fisier rezultat: vocale.wav
+Ordine: a, e, i, o, u. Sunt exemple fonetice IPA [a], [e], [i], [o], [u].
+Autorul inregistrarilor originale: Denelson83.
+Publicare: Wikimedia Commons.
+Licenta aleasa pentru fiecare inregistrare: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).
+https://creativecommons.org/licenses/by-sa/3.0/
+Data descarcarii: 5 noiembrie 2026.
+
+Modificari: conversie din OGG in WAV PCM pe 16 biti, mono, la 16000 Hz;
+concatenare in ordinea a-e-i-o-u; pauze de 0.4 s intre fisiere si cate 0.2 s
+de liniste la inceput si la sfarsit. Fara sinteza vocala si fara schimbarea vitezei.
+Montajul audio si spectrograma sa sunt oferite sub aceeasi licenta CC BY-SA 3.0.
+La redistribuire, pastrati acest fisier de atribuire alaturi de WAV si PDF.
+
+Surse individuale:
+
+a - Open front unrounded vowel.ogg
+https://commons.wikimedia.org/wiki/File:Open_front_unrounded_vowel.ogg
+Fisier original: https://upload.wikimedia.org/wikipedia/commons/6/65/Open_front_unrounded_vowel.ogg
+Autor: Denelson83; licenta: CC BY-SA 3.0.
+Intervalul clipului in montaj: 0.200000 - 0.783750 s.
+SHA-256 al originalului: bfb25c2357cbd18b1a906712b676fb3a878682218514e0c3c68975c81a40b06f
+
+e - Close-mid front unrounded vowel.ogg
+https://commons.wikimedia.org/wiki/File:Close-mid_front_unrounded_vowel.ogg
+Fisier original: https://upload.wikimedia.org/wikipedia/commons/6/6c/Close-mid_front_unrounded_vowel.ogg
+Autor: Denelson83; licenta: CC BY-SA 3.0.
+Intervalul clipului in montaj: 1.183750 - 1.900688 s.
+SHA-256 al originalului: 521ff5063c0893d8da87c2ad7b07a0e28995741a5856f821d4cbf8628820eff6
+
+i - Close front unrounded vowel.ogg
+https://commons.wikimedia.org/wiki/File:Close_front_unrounded_vowel.ogg
+Fisier original: https://upload.wikimedia.org/wikipedia/commons/9/91/Close_front_unrounded_vowel.ogg
+Autor: Denelson83; licenta: CC BY-SA 3.0.
+Intervalul clipului in montaj: 2.300687 - 2.902125 s.
+SHA-256 al originalului: b56dd3aaa59b5a7b1dc61892d1386652d5937fb0eccca8fe8e7faaea6b90b69d
+
+o - Close-mid back rounded vowel.ogg
+https://commons.wikimedia.org/wiki/File:Close-mid_back_rounded_vowel.ogg
+Fisier original: https://upload.wikimedia.org/wikipedia/commons/8/84/Close-mid_back_rounded_vowel.ogg
+Autor: Denelson83; licenta: CC BY-SA 3.0.
+Intervalul clipului in montaj: 3.302125 - 3.886437 s.
+SHA-256 al originalului: cef0c5c4b905afac7d4405b6838ca310d4035a05e6731cb113e349b29ed23c26
+
+u - Close back rounded vowel.ogg
+https://commons.wikimedia.org/wiki/File:Close_back_rounded_vowel.ogg
+Fisier original: https://upload.wikimedia.org/wikipedia/commons/5/5d/Close_back_rounded_vowel.ogg
+Autor: Denelson83; licenta: CC BY-SA 3.0.
+Intervalul clipului in montaj: 4.286437 - 4.956563 s.
+SHA-256 al originalului: 3597a60cbf5197882365d58a4251db925f9f6855ba8c612e870817cb9eab8bac
+
+Descriere potrivita pentru lucrare:
+Am folosit un montaj din cinci inregistrari fonetice publice de pe Wikimedia
+Commons, realizate de Denelson83, cu vocalele [a], [e], [i], [o], [u].
+Am adaugat pauze intre ele si am analizat montajul cu programul ex6.py.

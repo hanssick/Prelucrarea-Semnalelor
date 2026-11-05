@@ -1,0 +1,95 @@
+Laboratorul 4 - Exercitiul 1
+Comparatie intre DFT propriu, FFT propriu si NumPy FFT
+
+CE CERE EXERCITIUL
+Implementam FFT, apoi comparam DFT propriu, FFT propriu si numpy.fft.fft
+pentru N = 128, 256, 512, 1024, 2048, 4096, 8192.
+Graficul are trei curbe si foloseste o scara logaritmica pe axa timpului.
+
+POVESTEA CODULUI
+Pornim de la un vector de esantioane. DFT calculeaza pe rand fiecare
+coeficient X[k]. Pentru acel k, inmulteste toate esantioanele cu factorii
+complecsi exp(-2*pi*j*k*n/N) si aduna produsele. In cod, np.sum face suma
+pe toate valorile lui n; formula ramane cea directa din laboratorul 3.
+Bucla dupa k se executa de N ori, fiecare suma contine N termeni, deci
+volumul de calcul este de ordin N^2.
+
+FFT calculeaza aceiasi coeficienti, reorganizand sumele. Imparte vectorul
+in esantioanele de pe pozitiile pare si cele de pe pozitiile impare:
+x[::2] selecteaza pozitiile 0, 2, 4, ...;
+x[1::2] selecteaza pozitiile 1, 3, 5, ... .
+Este vorba despre paritatea pozitiei, nu despre paritatea valorii.
+
+Apoi functia se apeleaza pe cele doua jumatati. Le imparte din nou, pana
+cand fiecare subproblema are o singura valoare. Transformata unui vector
+cu un singur element este chiar acel element. La intoarcerea din apeluri,
+combinam rezultatele prin adunari, scaderi si factori complecsi de rotatie.
+
+Daca E si O sunt transformatele celor doua jumatati, atunci:
+W_N = exp(-2*pi*j/N);
+X[k] = E[k] + W_N^k * O[k];
+X[k+N/2] = E[k] - W_N^k * O[k], pentru k = 0, ..., N/2-1.
+
+La fiecare nivel facem in total un volum de calcul proportional cu N.
+Exista log2(N) niveluri, deci complexitatea este O(N*log2(N)).
+Implementarea radix-2 presupune ca N este o putere a lui 2, asa cum sunt
+toate dimensiunile cerute in enunt.
+
+MASURAREA TIMPILOR
+Pentru fiecare N generam un vector cu doua componente sinusoidale:
+x[n] = sin(2*pi*7*n/N) + 0.5*cos(2*pi*19*n/N).
+Acest vector este acelasi pentru cele trei metode la dimensiunea respectiva.
+Construirea vectorului, verificarile si desenarea nu sunt cronometrate.
+
+Cronometram fiecare functie cu time.perf_counter, de trei ori, si retinem
+mediana: valoarea din mijloc a celor trei durate ordonate.
+Facem cate un apel de incalzire inainte de masuratori. Comparatia numerica
+cu numpy.fft.fft se face separat de cronometrare, prin np.allclose.
+
+INTERPRETAREA GRAFICULUI
+Axa orizontala este logaritmica in baza 2, astfel incat dublarile lui N
+sunt egal distantate. Axa verticala este logaritmica, asa cum cere enuntul:
+ distantele verticale egale reprezinta rapoarte egale intre durate.
+
+In masuratorile realizate aici, timpul DFT creste mai repede decat timpul
+FFT propriu. NumPy FFT are timpi mai mici decat implementarea noastra.
+Complexitatea algoritmica explica tendinta de crestere; constantele de
+implementare si costul operatiilor Python influenteaza si ele timpul.
+FFT propriu si NumPy FFT au acelasi ordin de complexitate, dar nu aceeasi
+viteza efectiva.
+
+Micile fluctuatii ale timpilor, in special pentru NumPy la dimensiuni mici,
+sunt normale. Acest grafic descrie masuratorile efectuate in mediul acestei
+rezolvari. Pe alt calculator sau la alta rulare, timpii se pot modifica.
+Programul regenereaza graficul si ex1_timpi.txt cu masuratorile curente.
+
+VERIFICARI
+DFT propriu si FFT propriu au coincis numeric cu NumPy pentru toate cele
+sapte dimensiuni, cu toleranta absoluta de 1e-7.
+Au fost verificate suplimentar functiile pe vectori complecsi de dimensiuni
+mici, pe un impuls deplasat si pe spectrul analitic al semnalului de test.
+
+REZULTATELE MASURATE AICI
+Timpi in secunde: mediana a 3 rulari; valorile depind de calculator.
+N DFT_s FFT_propriu_s NumPy_FFT_s
+128 1.022431000e-03 5.956559999e-04 9.364000107e-06
+256 2.809709000e-03 1.313073000e-03 9.153000065e-06
+512 8.788181000e-03 2.832904000e-03 1.065600009e-05
+1024 3.108734700e-02 6.159482000e-03 1.630499992e-05
+2048 1.078876550e-01 1.353696400e-02 2.331399992e-05
+4096 4.396193910e-01 3.276656300e-02 8.185199977e-05
+8192 1.657285763e+00 6.365890400e-02 8.970299996e-05
+
+La N=8192, raportul timp_DFT/timp_FFT_propriu a fost 26.03.
+Abaterea maxima DFT vs NumPy la N=8192: 6.186e-09.
+Abaterea maxima FFT propriu vs NumPy la N=8192: 2.533e-12.
+
+FISIERE
+ex1.py - codul comentat, care ruleaza masuratorile si produce graficul.
+ex1.pdf - graficul in format PDF vectorial.
+ex1_timpi.txt - tabelul timpilor masurati la rulare.
+ex1_observatii.txt - explicatia matematica si observatiile de mai sus.
+
+Referinte pentru functiile bibliotecilor:
+https://numpy.org/doc/stable/reference/generated/numpy.fft.fft.html
+https://docs.python.org/3/library/time.html#time.perf_counter

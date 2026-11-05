@@ -1,0 +1,94 @@
+LABORATORUL 4 - EXERCITIUL 5
+Distingerea vocalelor pe baza spectrogramei
+
+CERINTA
+Vocalele a, e, i, o, u trebuie observate pe o spectrograma, folosind
+Audacity sau o aplicatie de telefon, pentru a vedea daca pot fi distinse.
+
+INREGISTRAREA FOLOSITA
+In aceasta varianta folosim un montaj din inregistrari fonetice publice,
+ales in locul unei inregistrari proprii. Cele cinci sunete sunt exemplele
+IPA [a], [e], [i], [o], [u], realizate de Denelson83 si publicate pe
+Wikimedia Commons sub licenta CC BY-SA 3.0. Atribuirea completa, linkurile
+si modificarile sunt in surse_audio.txt.
+
+Fisierul vocale.wav este acelasi folosit la exercitiul 6.
+Ordinea vocalelor este a, e, i, o, u, cu pauze intre ele.
+WAV: mono, PCM pe 16 biti, frecventa de esantionare 16000 Hz.
+Durata: aproximativ 5.16 secunde.
+
+CE FACI IN AUDACITY(pentru mine ca observatie)
+1. Deschizi Audacity.
+2. Alegi File > Import > Audio si selectezi vocale.wav.
+3. Deschizi meniul pistei, apasand pe numele pistei sau pe sageata de langa el.
+4. Alegi Spectrogram.
+5. Apesi Play si urmaresti pe rand cele cinci grupuri de sunete.
+6. Pentru detalii, putem deschide Spectrogram Settings din acelasi meniu.
+   Un punct de pornire util: scara Linear, frecventa minima 0 Hz,
+   maxima 5000 Hz, Window size 1024 si Window type Hann.
+   Acestea sunt setari pentru inspectia in Audacity; culorile si detaliile
+   pot diferi fata de PDF, in functie de setarile de analiza si afisare.
+
+Optional,nu  potem importa ex5_etichete_Audacity.txt prin
+File > Import > Labels. Apar etichetele a, e, i, o, u in intervalele lor.
+Etichetele provin din ordinea si duratele fisierelor originale;
+nu sunt rezultatul unui algoritm de recunoastere a vocalelor.
+
+OBSERVATII
+Pe orizontala spectrogramei este timpul, iar pe verticala este frecventa.
+Culoarea indica intensitatea componentei spectrale. Zonele deschise arata
+componente mai intense; pauzele dintre sunete sunt regiuni intunecate.
+
+Cele cinci vocale au tipare spectrale diferite. In figura pregatita:
+- a are zone intense in jurul a 800-1500 Hz;
+- e are zone intense in jurul a 2500-3000 Hz si aproape de 4000 Hz;
+- i are o zona intensa in jurul a 3000-3500 Hz;
+- o si u au componente intense la frecvente joase, sub aproximativ 1000 Hz,
+  dar repartizarea benzilor si evolutia lor in timp difera.
+
+Acestea sunt observatii aproximative despre aceasta inregistrare.
+Nu sunt masuratori automate ale formantilor si nici valori universale
+pentru orice vorbitor.
+
+Vibratiile corzilor vocale produc armonice. Tractul vocal accentueaza
+anumite regiuni ale spectrului, in functie de configuratia sa.
+Benzile de rezonanta, numite formanti, contribuie la caracterul vocalelor.
+Analiza vizuala urmareste distributia acestor regiuni spectrale.
+
+CONCLUZIE
+In inregistrarea folosita, vocalele pot fi diferentiate vizual prin
+pozitia si distributia benzilor spectrale intense. La schimbarea vocalei
+se schimba tiparul spectrului. Pauzele dintre sunete ajuta la delimitarea
+celor cinci portiuni. Identificarea vizuala ramane calitativa; nu am
+implementat un clasificator automat de vocale.
+
+POVESTEA OBSERVARII
+Citind figura de la stanga la dreapta, intalnim mai intai sunetul a,
+apoi o pauza, apoi e, i, o si u, tot cu pauze intre ele. Fiecare grup
+are benzi luminoase la anumite inaltimi. Cand trecem de la un grup la
+altul, aceste zone intense se muta sau isi schimba repartizarea.
+Acesta este indiciul vizual care ne permite sa comparam vocalele.
+
+DESPRE PDF
+ex5.pdf contine forma de unda si o spectrograma cu vocalele etichetate.
+Figura a fost calculata in Python si nu este o captura din Audacity.
+Sunt afisate frecventele 0-5000 Hz, pentru a vedea mai clar benzile.
+Spectrograma foloseste ferestre dreptunghiulare de 826 esantioane,
+cu pasul de 413 esantioane, ca la exercitiul 6. Culorile reprezinta
+20*log10(|FFT|/maximul global), cu prag inferior de -80 dB.
+Pentru partea ceruta in Audacity, urmezi pasii de mai sus cu acelasi WAV.
+
+FISIERE PENTRU GITHUB
+ex5.pdf
+ex5_observatii.txt
+vocale.wav
+surse_audio.txt
+Optional: ex5_etichete_Audacity.txt
+
+DOCUMENTATIE
+Audacity - import audio si etichete:
+https://manual.audacityteam.org/man/file_menu_import.html
+Audacity - vizualizarea si setarile spectrogramei:
+https://manual.audacityteam.org/man/spectrogram_view.html
+UNSW - acustica vocii, armonice, tract vocal si formanti:
+https://newt.phys.unsw.edu.au/jw/voice.html

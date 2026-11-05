@@ -1,0 +1,68 @@
+Laboratorul 4 - Exercitiul 3
+Esantionare suficienta pentru cele trei sinusoide din exercitiul 2
+
+DATELE ALESE
+Pastram semnalele:
+x0(t) = sin(2*pi*13*t), semnalul initial;
+x1(t) = sin(2*pi*3*t), prima alternativa;
+x2(t) = sin(2*pi*23*t), a doua alternativa.
+Toate au amplitudine 1 si faza initiala 0.
+Modificam frecventa de esantionare de la 10 Hz la 64 Hz.
+
+CONDITIA DE ESANTIONARE
+Pentru semnalul initial de 13 Hz, pragul ratei de esantionare este 26 Hz.
+Deoarece vrem sa comparam corect toate cele trei semnale, alegem o rata
+care depaseste dublul celei mai mari frecvente dintre ele:
+B = max(3, 13, 23) = 23 Hz;
+fs = 64 Hz > 2*B = 46 Hz.
+Limita Nyquist a esantionarii este fs/2 = 32 Hz, iar 3, 13 si 23 Hz
+sunt toate strict sub aceasta limita.
+
+POVESTEA CODULUI
+Pastram aceleasi trei curbe continue de la exercitiul 2. Nu schimbam
+frecventele, amplitudinile sau fazele lor. Schimbam numai momentele la
+care luam esantioane.
+
+In loc de un esantion la fiecare 0.1 secunde, luam acum esantioane la
+fiecare 1/64 = 0.015625 secunde. Pe intervalul [0, 1], cu ambele capete
+incluse, obtinem 65 de puncte pentru fiecare semnal. Cele 5000 de puncte
+ale grilei dense sunt folosite numai pentru desenarea curbelor netede.
+
+Calculam separat valorile celor trei sinusoide la noua grila de timp.
+Desenam fiecare curba impreuna cu propriile esantioane. Acum distributia
+valorilor esantionate difera de la un semnal la altul. Cele doua semnale
+alternative nu mai produc acelasi sir de esantioane ca semnalul initial.
+Verificarile np.allclose intorc False pentru toate cele trei perechi.
+
+Exista in continuare momente la care unele valori coincid. De exemplu,
+la t = 0 toate cele trei sinusoide sunt zero. Ceea ce difera sunt sirurile
+complete de esantioane; nu afirmam ca fiecare punct individual difera.
+
+O VERIFICARE MATEMATICA SIMPLA
+La primul moment pozitiv, t_1 = 1/64 secunde, obtinem:
+x0(t_1) = sin(13*pi/32) = aproximativ 0.956940;
+x1(t_1) = sin(3*pi/32)  = aproximativ 0.290285;
+x2(t_1) = sin(23*pi/32) = aproximativ 0.773010.
+Aceste trei valori sunt diferite, deci cele trei siruri nu pot fi identice.
+
+La exercitiul 2, diferentele de frecventa de 10 Hz erau egale cu rata
+de esantionare si introduceau diferente de faza de 2*pi*n. Acum aceleasi
+diferente de frecventa, raportate la fs = 64 Hz, nu mai conduc la acea
+coincidenta a sirurilor.
+
+INTERPRETAREA CORECTA A ABSENTEI ALIERII
+Pastrand ipoteza ca semnalul este limitat la banda considerata, rata de
+64 Hz este suficienta pentru componentele de 3, 13 si 23 Hz. Cele trei
+sinusoide alese nu se mai confunda dupa esantionare.
+
+Aceasta afirmatie presupune banda specificata. Fara o limita asupra
+frecventelor admise, exista in continuare frecvente mai mari, de forma
+f + m*fs, care pot produce aceleasi esantioane. Teorema de esantionare
+foloseste atat informatia despre banda, cat si rata de esantionare.
+Graficul de aici compara cele trei semnale; nu calculeaza explicit o
+reconstructie prin interpolare.
+
+RULARE
+Deschide ex3.py in Spyder si apasa butonul verde Run.
+Programul afiseaza verificarile, figura si salveaza ex3.pdf in directorul
+de lucru din care este rulat.

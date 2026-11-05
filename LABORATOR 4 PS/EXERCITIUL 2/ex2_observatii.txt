@@ -1,0 +1,65 @@
+Laboratorul 4 - Exercitiul 2
+Fenomenul de aliere la esantionare
+
+DATELE ALESE
+Semnal initial: x0(t) = sin(2*pi*13*t).
+Amplitudine: 1; faza initiala: 0; frecventa: f0 = 13 Hz.
+Frecventa de esantionare: fs = 10 Hz.
+Semnale alternative: x1(t) = sin(2*pi*3*t) si x2(t) = sin(2*pi*23*t).
+Toate cele trei semnale au amplitudine unitara si faza initiala nula.
+
+DE CE ESANTIONAREA ESTE SUB-NYQUIST
+Pentru semnalul initial, 2*f0 = 26 Hz, iar fs = 10 Hz < 26 Hz.
+Limita Nyquist a esantionarii alese este fs/2 = 5 Hz.
+Componenta initiala de 13 Hz depaseste aceasta limita.
+
+POVESTEA CODULUI
+Mai intai construim semnalul initial de 13 Hz. Folosim o grila deasa de
+timp numai pentru a putea desena o curba neteda. Apoi construim o a doua
+grila, mult mai rara, pentru esantionarea efectiva. Pe aceasta din urma,
+momentele sunt t_n = n/10, deci pasul dintre esantioane este 0.1 secunde.
+Intervalul [0, 1] include ambele capete, rezultand 11 puncte de esantionare.
+
+Calculam valoarea sinusului numai la aceste momente. In al doilea grafic,
+punctele galbene arata informatia ramasa dupa esantionare. Intre aceste
+puncte, forma continua initiala nu mai este direct cunoscuta.
+
+Construim apoi doua sinusoide diferite, de 3 Hz si 23 Hz. Le esantionam
+independent, la aceleasi momente. Cele doua curbe au alte forme intre
+puncte, dar trec exact prin aceleasi puncte galbene. Verificarile cu
+np.allclose confirma numeric egalitatea esantioanelor.
+
+De aceea, numai din valorile esantionate nu putem decide care dintre
+cele trei sinusoide a produs datele. Aceasta ambiguitate este alierea.
+Semnalul de 13 Hz poate fi confundat, dupa esantionare, cu cel de 3 Hz.
+
+DEMONSTRATIA MATEMATICA
+La momentele t_n = n/fs, pentru orice numar intreg m, avem:
+
+sin(2*pi*(f0 + m*fs)*t_n)
+= sin(2*pi*f0*n/fs + 2*pi*m*n)
+= sin(2*pi*f0*n/fs).
+
+Ultima egalitate foloseste periodicitatea sinusului si faptul ca m*n
+este intreg. Asadar, frecventele care difera printr-un multiplu intreg
+al lui fs pot da aceleasi esantioane.
+
+Pentru m = -1: f0 - fs = 13 - 10 = 3 Hz.
+Pentru m =  1: f0 + fs = 13 + 10 = 23 Hz.
+Prin urmare, x0(t_n) = x1(t_n) = x2(t_n) pentru orice indice intreg n,
+nu doar pentru punctele desenate in figura.
+
+OBSERVATII
+1. Curbele continue sunt diferite; esantioanele coincid.
+2. Punctele galbene din cele trei grafice sunt calculate separat.
+3. Diferentele numerice foarte mici provin din precizia calculelor
+   cu numere reale; egalitatea matematica este exacta.
+4. Cele 5000 de puncte folosite pentru desen nu reprezinta esantionarea
+   studiata. Esantionarea studiata are frecventa fs = 10 Hz.
+5. Unicitatea reconstructiei necesita o ipoteza asupra benzii semnalului
+   si o rata de esantionare potrivita acelei benzi.
+
+RULARE
+Deschide ex2.py in Spyder si apasa butonul verde Run.
+Programul afiseaza verificarile, figura si salveaza ex2.pdf in directorul
+de lucru din care este rulat.
