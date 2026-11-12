@@ -1,0 +1,53 @@
+LABORATORUL 5 - EXERCITIUL 1 d)
+Modulul transformatei Fourier
+
+Programul citeste coloana Count din Train.csv. Primele doua coloane sunt
+ID si Datetime; ele nu sunt valorile semnalului asupra caruia calculam FFT.
+In genfromtxt, usecols=2 selecteaza a treia coloana, deoarece numerotarea
+coloanelor incepe de la zero. skip_header=1 omite randul cu numele coloanelor.
+
+N = len(x) este numarul de esantioane: 18288.
+Frecventa de esantionare este Fs = 1/3600 Hz, deoarece masuratorile sunt
+efectuate din ora in ora. Datele descarcate au fost verificate: intervalele
+orare sunt uniforme, iar coloana Count nu are valori lipsa.
+
+X = np.fft.fft(x) calculeaza transformata Fourier discreta folosind FFT.
+Matematic:
+X[k] = suma pentru n=0,...,N-1 din x[n]*exp(-2*pi*i*k*n/N).
+
+Valorile lui X sunt numere complexe. M = abs(X)/N reprezinta modulul
+transformatei normalizat prin numarul de esantioane, conform ghidului
+din laborator. Nu este un grafic al fazei si nici al puterii spectrale.
+
+Pentru desen pastram indicii k = 0, 1, ..., N/2-1. Semnalul este real,
+iar cealalta jumatate a spectrului are modulul simetric. In aceasta
+reprezentare, conform ghidului, nu dublam amplitudinile frecventelor pozitive.
+N este par, iar binul Nyquist k=N/2 nu este inclus in portiunea desenata.
+
+Frecventa asociata indicelui k este f[k] = k*Fs/N, in Hz.
+Astfel, pe axa orizontala sunt frecvente fizice, nu indicii din vector.
+In Python 3 folosim N//2 pentru a obtine un numar intreg de indici.
+
+Programul deseneaza M[k] in functie de f[k] si salveaza figura in
+lab5_ex1_d.pdf, in acelasi dosar cu programul si cu Train.csv.
+La acest subpunct FFT este calculata pe valorile brute ale semnalului.
+In grafic se vede o valoare mare la frecventa zero; aceasta va fi
+analizata separat la subpunctul e).
+
+CUM RULEZI IN SPYDER
+1. Descarci lab5_ex1_d.py si Train.csv in acelasi dosar.
+2. Deschizi programul in Spyder si apesi butonul verde Run.
+3. Apare graficul, iar PDF-ul este salvat automat langa program.
+
+SURSA DATELOR
+Setul indicat in laborator:
+https://www.kaggle.com/datasets/lampubhutia/bullettrain-timeseries-data
+Fisierul Train.csv a fost extras, fara modificari, din arhiva publica:
+https://www.kaggle.com/api/v1/datasets/download/lampubhutia/bullettrain-timeseries-data
+Data descarcarii: 12 noiembrie 2026.
+Fisierul contine 18288 randuri de date si coloanele ID, Datetime, Count.
+SHA-256 al fisierului:
+efded37261cdd802628fda956b67d1766baf60d345d0f1869aaeff516aa4f0fd
+
+Documentatie FFT:
+https://numpy.org/doc/stable/reference/generated/numpy.fft.fft.html

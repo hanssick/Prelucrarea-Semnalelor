@@ -1,0 +1,58 @@
+LABORATORUL 5 - EXERCITIUL 1 e)
+Componenta continua si eliminarea ei
+
+REZULTAT
+Da, semnalul prezinta o componenta continua.
+Media celor 18288 esantioane este 138.95811461067368.
+Dupa centrare, media calculata numeric este -6.3656672040099966e-15, adica
+zero pana la erorile de rotunjire in virgula mobila.
+Modulul componentei FFT de la frecventa zero, impartit la N, devine
+5.8186176786653873e-15.
+
+JUSTIFICARE MATEMATICA
+Componenta continua a semnalului discret este media:
+media = (1/N) * suma pentru n=0,...,N-1 din x[n].
+La frecventa zero, factorul exponential din DFT este 1, deci:
+X[0] = suma x[n] = N*media.
+Cum media nu este zero, semnalul are componenta continua.
+
+O eliminam prin formula:
+y[n] = x[n] - media.
+Atunci suma y[n] = suma x[n] - N*media = 0, deci media lui y este 0.
+In domeniul Fourier obtinem Y[0] = 0, iar Y[k] = X[k] pentru k diferit de 0,
+in aritmetica exacta. In calculele numerice pot ramane erori foarte mici.
+
+POVESTEA CODULUI
+Citim din Train.csv coloana Count, ca la subpunctul d). Calculam media
+intregii inregistrari si construim un nou vector scazand aceasta valoare
+din fiecare esantion. Pastram si vectorul initial, ca sa putem compara.
+Calculam FFT pentru ambii vectori si desenam modulele normalizate prin N,
+pe aceleasi axe de frecventa si cu aceeasi scara verticala.
+Figura mareste zona din jurul frecventei zero, pana la 20*Fs/N,
+adica aproximativ 3.04e-7 Hz, pentru a separa vizual componenta continua
+de componentele la frecvente foarte mici. Punctele marcheaza exact 0 Hz.
+In primul grafic se vede componenta mare de la frecventa zero. In al doilea,
+aceasta este eliminata. Celelalte componente Fourier se pastreaza.
+
+INTERPRETARE
+Vectorul centrat y descrie abaterile fata de media intregii inregistrari.
+O valoare negativa inseamna trafic sub aceasta medie; nu inseamna un
+numar negativ de masini.
+Scaderea mediei elimina un nivel constant. Tendinta de crestere in timp
+si oscilatiile semnalului raman; centrarea nu elimina tendinta.
+
+CE AFISEAZA SPYDER
+Media initiala: 138.95811461067368
+Media dupa centrare: -6.3656672040099966e-15
+O valoare de ordinul 10 la puterea -15 este, aici, un reziduu numeric.
+
+CUM RULEZI
+Pui lab5_ex1_e.py si Train.csv in acelasi dosar. Deschizi programul in
+Spyder si apesi butonul verde Run. Programul afiseaza mediile si figura,
+apoi salveaza lab5_ex1_e.pdf in acelasi dosar.
+Daca lucrezi in C:/Users/lenar/untitled0.py, Train.csv trebuie sa fie
+in C:/Users/lenar/.
+
+SURSA DATELOR
+Este acelasi Train.csv descarcat pentru subpunctul d), fara modificari.
+https://www.kaggle.com/datasets/lampubhutia/bullettrain-timeseries-data

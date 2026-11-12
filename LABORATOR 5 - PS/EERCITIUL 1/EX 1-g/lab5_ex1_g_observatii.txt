@@ -1,0 +1,50 @@
+LABORATORUL 5 - EXERCITIUL 1 g)
+O luna de trafic, incepand intr-o zi de luni
+
+ALEGEREA INTERVALULUI
+Am ales luna calendaristica aprilie 2013, care are 30 de zile.
+1 aprilie 2013 este luni. In Train.csv, masuratoarea de la
+01.04.2013, ora 00:00, are ID-ul si indicele Python 5256.
+Astfel, start = 5256 > 1000, iar prima zi reprezentata este luni.
+Data si ziua saptamanii au fost verificate folosind coloana Datetime.
+Indicii Python sunt numerotati de la zero.
+
+Cate o masuratoare pe ora, timp de 30 de zile, inseamna:
+nr_ore = 30 * 24 = 720 esantioane.
+Ultimul esantion inclus are indicele 5975 si data 30.04.2013, ora 23:00.
+Indicele 5976 corespunde datei de 01.05.2013, ora 00:00, si este exclus.
+
+SELECTIA IN PYTHON
+luna = x[5256:5976]
+Limita din dreapta este exclusa la operatia de feliere. Prin urmare,
+numarul de esantioane selectate este 5976 - 5256 = 720.
+
+AXA TIMPULUI
+zile = arange(720)/24 transforma indicii orari in zile de la inceputul lunii.
+Primul punct are timpul relativ 0, iar ultimul 719/24 zile.
+Marcajele 0, 7, 14, 21 si 28 sunt etichetate cu datele
+01.04, 08.04, 15.04, 22.04 si 29.04. Toate aceste date sunt zile de luni.
+Punctele intermediare reprezinta masuratorile orare, inclusiv weekendurile.
+
+POVESTEA CODULUI
+Programul citeste coloana Count, care contine numarul masurat la fiecare
+ora. Alegem inceputul lunii aprilie 2013 si pastram urmatoarele 720 de
+valori. Construim axa timpului in zile si desenam masuratorile pe un grafic
+separat, cu titlu si unitati. Graficul permite compararea variatiilor de la
+o zi la alta si de la o saptamana la alta. Aici reprezentam valorile brute
+ale traficului, in unitatile originale ale semnalului.
+Figura este afisata si salvata automat in lab5_ex1_g.pdf.
+
+CONDITIILE CERINTEI
+- indice initial mai mare decat 1000: 5256;
+- inceput intr-o zi de luni: 01.04.2013, ora 00:00;
+- o luna completa: toate cele 720 de masuratori orare din aprilie 2013;
+- un grafic separat, cu timpul si numarul de masini pe axe.
+
+CUM RULEZI
+Pui lab5_ex1_g.py si Train.csv in acelasi dosar. Deschizi programul in
+Spyder si apesi butonul verde Run. PDF-ul este salvat langa program.
+
+SURSA DATELOR
+Acelasi fisier Train.csv folosit la subpunctele precedente, fara modificari.
+https://www.kaggle.com/datasets/lampubhutia/bullettrain-timeseries-data

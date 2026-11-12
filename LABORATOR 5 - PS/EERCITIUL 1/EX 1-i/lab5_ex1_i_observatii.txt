@@ -1,0 +1,80 @@
+LABORATORUL 5 - EXERCITIUL 1 i)
+Eliminarea componentelor de frecventa inalta
+
+ALEGEREA FILTRULUI
+Alegem un filtru trece-jos ideal cu pragul
+fc = 1/(12*3600) = 2.314814814815e-05 Hz.
+Pastram componentele cu |f| <= fc si anulam componentele cu |f| > fc.
+Pentru frecvente nenule, aceasta inseamna pastrarea perioadelor de cel
+putin 12 ore si eliminarea componentelor cu perioade mai mici de 12 ore.
+
+JUSTIFICARE
+Dorim sa netezim variatiile rapide, de ordinul catorva ore, pentru a vedea
+mai clar evolutia zilnica si saptamanala a traficului.
+Componenta zilnica are f = 1/(24*3600) Hz, iar cea saptamanala aproximativ
+1/(7*24*3600) Hz. Ambele sunt sub prag, deci coeficientii lor se pastreaza.
+Pastram si componenta de 12 ore, aflata chiar la prag.
+Alegerea este una posibila, justificata de scara temporala urmarita;
+nu presupunem ca toate componentele eliminate sunt numai zgomot.
+
+FORMULA
+X_filtrat[k] = X[k], daca |f[k]| <= fc;
+X_filtrat[k] = 0, daca |f[k]| > fc.
+x_filtrat = IFFT(X_filtrat).
+
+POVESTEA CODULUI
+Citim coloana Count si calculam FFT pe toate cele 18288 de esantioane.
+fftfreq(N) genereaza frecventele in cicluri pe esantion, inclusiv pe cele
+negative. Le inmultim cu Fs = 1/3600 pentru a obtine frecventele in Hz.
+Comparam modulul fiecarei frecvente cu pragul si anulam coeficientii
+care depasesc pragul. Masca trateaza simetric frecventele pozitive si
+negative, ceea ce permite reconstruirea unui semnal real.
+
+Pastram coeficientii complecsi ai FFT, inclusiv fazele lor. Folosim IFFT
+pentru a reveni in timp. Partea imaginara ramasa este numai o eroare
+numerica foarte mica, asa ca pastram partea reala.
+Nu impartim FFT la N inainte de IFFT: normalizarea necesara reconstruirii
+este deja inclusa in transformata inversa implicita a NumPy.
+
+Filtrarea se aplica intregii inregistrari. Pentru comparatia grafica,
+afisam toate cele 720 de masuratori din aprilie 2013, incepand de la
+indicele 5256, la fel ca la g). Curba albastra este semnalul initial,
+iar curba portocalie este rezultatul filtrarii.
+
+REZULTATE SI VERIFICARI
+Sunt pastrati 3049 coeficienti FFT, inclusiv DC;
+sunt anulati 15239 coeficienti din afara benzii.
+Cu numerotare de la zero, sunt pastrati indicii 0,...,1524 si
+indicii 16764,...,18287, care reprezinta frecventele negative pereche.
+Media initiala: 138.958114610674.
+Media dupa filtrare: 138.958114610674.
+
+La acest subpunct pastram nivelul mediu, pentru a compara graficul in
+unitatile initiale ale traficului. Filtrarea frecventelor inalte este
+echivalenta cu centrarea, filtrarea semnalului centrat si adaugarea mediei
+la final. Vectorul original x si fisierul CSV raman nemodificate.
+
+LIMITARI SI INTERPRETARE
+Taierea brusca a spectrului poate produce oscilatii si depasiri ale
+valorilor locale ale semnalului. In aprilie, valorile filtrate sunt intre
+-4.485953 si 86.001637.
+O valoare filtrata negativa este un efect al aproximarii prin filtrul
+liniar, nu un numar observat de masini. Valorile nu sunt rotunjite sau
+taiate la zero, deoarece aceste operatii ar modifica din nou spectrul.
+FFT trateaza inregistrarea ca o perioada a unui semnal periodic; la
+capetele inregistrarii pot aparea artefacte de la diferentele dintre
+ultimele si primele valori. Luna reprezentata este in interiorul datelor.
+Rezultatul este o aproximare netezita; filtrarea poate elimina si variatii
+rapide reale ale traficului, pe langa fluctuatii nedorite.
+
+CUM RULEZI
+Pui lab5_ex1_i.py si Train.csv in acelasi dosar. Deschizi programul in
+Spyder si apesi Run. Graficul este afisat si salvat in lab5_ex1_i.pdf.
+
+SURSA DATELOR
+Acelasi Train.csv folosit la subpunctele precedente.
+https://www.kaggle.com/datasets/lampubhutia/bullettrain-timeseries-data
+
+DOCUMENTATIE
+https://numpy.org/doc/stable/reference/generated/numpy.fft.fftfreq.html
+https://numpy.org/doc/stable/reference/generated/numpy.fft.ifft.html

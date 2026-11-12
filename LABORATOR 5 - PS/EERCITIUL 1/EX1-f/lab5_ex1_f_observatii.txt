@@ -1,0 +1,76 @@
+LABORATORUL 5 - EXERCITIUL 1 f)
+Cele mai mari patru valori ale modulului transformatei Fourier
+
+METODA
+Lucram cu semnalul centrat la subpunctul e): y = x - mean(x).
+N = 18288; Fs = 1/3600 Hz.
+Calculam FFT si modulul normalizat M[k] = |FFT(y)[k]|/N.
+Folosim jumatatea pozitiva a spectrului, ca la d), si excludem k=0.
+Astfel nu numaram de doua ori perechile de frecvente pozitiva/negativa.
+Binul Nyquist nu este inclus in jumatatea desenata la d); aceasta alegere
+nu influenteaza cele patru rezultate de mai jos.
+
+Sortam descrescator valorile M[1:] si retinem primii patru indici.
+argsort intoarce pozitiile in ordinea crescatoare a valorilor; [::-1]
+inverseaza ordinea, [:4] pastreaza primele patru pozitii, iar +1 compenseaza
+faptul ca am inceput selectia de la M[1], excluzand M[0].
+Selectia respecta cerinta de a lua cele mai mari patru valori individuale
+ale modulului; nu este o cautare a patru maxime locale.
+
+FORMULE
+f[k] = k*Fs/N, in Hz.
+T[k] = 1/f[k], in secunde.
+T_zile[k] = 1/(f[k]*86400).
+Pentru acest fisier, T_zile[k] = 762/k.
+Valorile modulelor sunt normalizate prin N, ca in ghidul laboratorului.
+
+REZULTATE, IN ORDINE DESCRESCATOARE A MODULULUI
+1. k=1; |FFT|/N=66.8538576639; f=1.518907358802e-08 Hz; T=762.00000000 zile.
+2. k=2; |FFT|/N=35.2191729779; f=3.037814717605e-08 Hz; T=381.00000000 zile.
+3. k=762; |FFT|/N=27.1020222876; f=1.157407407407e-05 Hz; T=1.00000000 zile.
+4. k=3; |FFT|/N=25.2199164840; f=4.556722076407e-08 Hz; T=254.00000000 zile.
+
+INTERPRETAREA FIECAREI COMPONENTE
+1. k=1, perioada Fourier de 762 de zile: componenta foarte lenta, influentata
+   puternic de evolutia generala crescatoare a traficului pe inregistrare.
+2. k=2, perioada Fourier de 381 de zile: tot o componenta lenta, influentata
+   de tendinta si de variatiile pe termen lung.
+3. k=762, perioada de 1 zi: componenta zilnica a traficului, asociata
+   alternantei zi/noapte si activitatii zilnice.
+4. k=3, perioada Fourier de 254 de zile: componenta lenta, influentata
+   de tendinta si de variatiile pe termen lung.
+
+Perioadele de 762, 381 si 254 de zile sunt perioade matematice ale binurilor
+DFT selectate. Ele nu demonstreaza existenta unor cicluri reale ale
+traficului care se repeta exact la aceste durate. In special, din valoarea
+381 de zile nu putem afirma automat ca am identificat o periodicitate anuala.
+Pe un interval finit, tendinta crescatoare contribuie puternic la binurile
+foarte apropiate de frecventa zero. Scaderea mediei elimina numai DC;
+tendinta ramane in semnal, asa cum am observat la e).
+
+COMPONENTA SAPTAMANALA
+In acelasi spectru exista o componenta apropiata de o saptamana:
+k = 109; f = 1.655609021095e-06 Hz;
+T = 6.99082569 zile;
+|FFT|/N = 19.0004715909.
+Ea este pe locul 5 in ordinea descrescatoare a modulelor pozitive,
+dupa excluderea DC, deci nu intra in primele patru valori cerute.
+
+POVESTEA CODULUI
+Citim aceleasi masuratori, scadem media si calculam FFT. Ne uitam la
+marimea fiecarei componente si le ordonam. Selectam patru componente,
+aflam frecventele lor fizice, apoi calculam perioadele pentru a le putea
+interpreta. Programul afiseaza tabelul in consola Spyder si deseneaza
+patru bare, cate una pentru fiecare componenta selectata, in ordinea
+modulului. Etichetele contin indicele k, frecventa in Hz si perioada in zile.
+Barele sunt categorii separate; axa lor orizontala nu este o scara continua
+a frecventelor. Figura este salvata in lab5_ex1_f.pdf.
+
+CUM RULEZI
+Pui lab5_ex1_f.py si Train.csv in acelasi dosar. Deschizi programul in
+Spyder si apesi Run. Tabelul apare in consola, iar figura este afisata
+si salvata automat in acelasi dosar.
+
+SURSA DATELOR
+Acelasi Train.csv descarcat pentru d), fara modificari.
+https://www.kaggle.com/datasets/lampubhutia/bullettrain-timeseries-data
